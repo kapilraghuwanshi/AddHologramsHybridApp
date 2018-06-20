@@ -1,14 +1,96 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
+  <ion-navbar color="primary">
+    <ion-title text-center>
+      Add new Holograms
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-grid class="tabular">
+    <ion-row>
+      <ion-col text-center>
+        <b>Hologram Form</b>
+      </ion-col>
+    </ion-row>
+    <form (ngSubmit)="submitHolograms()" #holoForm="ngForm">
+      <ion-row>
+        <ion-col col-sm-4>
+          <label>Hologram Name
+            <span class="asterik">*</span>
+          </label>
+        </ion-col>
+        <ion-col col-sm-8>
+          <input type="text" id="HologramName" name="HologramName" [(ngModel)]="holoModel.HologramName" placeholder="Write Hologram Name"
+            required #HologramName="ngModel" pattern="[a-zA-Z][a-zA-Z ]+">
+          <div *ngIf="HologramName.invalid && (HologramName.dirty || HologramName.touched)" class="validation">
+            <div [hidden]="!HologramName.hasError('required')">Hologram Name Required</div>
+            <div [hidden]="!HologramName.hasError('pattern')">Only alphabets allowed</div>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-sm-4>
+          <label>Packing Type
+            <span class="asterik">*</span>
+          </label>
+        </ion-col>
+        <ion-col col-sm-8>
+          <input type="text" id="packingType" name="packingType" [(ngModel)]="holoModel.PackingType" placeholder="Write Packing Type"
+            required #packingType="ngModel" pattern="[a-zA-Z][a-zA-Z ]+">
+          <div *ngIf="packingType.invalid && (packingType.dirty || packingType.touched)" class="validation">
+            <div [hidden]="!packingType.hasError('required')">Packing Type Required</div>
+            <div [hidden]="!packingType.hasError('pattern')">Only alphabets allowed</div>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-sm-4>
+          <label>Hologram Color
+            <span class="asterik">*</span>
+          </label>
+        </ion-col>
+        <ion-col col-sm-8>
+          <select id="holoColor" name="holoColor" (change)="selectColor()" [(ngModel)]="selectedColor" required>
+            <option *ngFor="let color of HoloColors" [value]="color.no">{{color.no}}</option>
+          </select>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-sm-4>
+          <label>Description
+            <span class="asterik">*</span>
+          </label>
+        </ion-col>
+        <ion-col col-sm-8>
+          <textarea id="desc" name="desc" rows="2" #Desc="ngModel" [(ngModel)]="holoModel.Description" required placeholder="Write hologram Description"></textarea>
+          <div *ngIf="Desc.invalid && (Desc.dirty || Desc.touched)" class="validation">
+            <div [hidden]="!Desc.hasError('required')">Description Required</div>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-sm-4>
+          <label>Is Active?</label>
+        </ion-col>
+        <ion-col col-sm-8>
+          <input type="checkbox" id="IsActive" name="IsActive" (change)="onCheckboxActive()">
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col text-right>
+          <button type="submit" [disabled]="!holoForm.form.valid" ion-button color="primary" round>Submit</button>
+        </ion-col>
+        <ion-col>
+          <button type="reset" ion-button color="primary" round>Reset</button>
+        </ion-col>
+      </ion-row>
+    </form>
+
+  </ion-grid>
 </ion-content>
